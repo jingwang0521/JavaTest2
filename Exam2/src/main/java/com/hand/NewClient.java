@@ -8,32 +8,35 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class NewClient {
-    public static void main(String [] arga){
-        try {
-            Socket s = new Socket("127.0.0.1",1001);
+public class NewClient extends Thread{
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            String line;
-            StringBuilder sb = new StringBuilder();
-            while ((line = br.readLine())!=null){
-                sb.append(line);
-            }
-            br.close();
+	@Override
+	public  void run(){
+		try {
+			Socket s = new Socket("127.0.0.1",1001);
 
-            File file = new File("../JavaTest2/Exam2/temp/ampleChapter1.pdf");
+			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			String line;
+			StringBuilder sb = new StringBuilder();
+			while ((line = br.readLine())!=null){
+				sb.append(line);
+			}
+			br.close();
 
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
-            bw.write(sb.toString());
-            bw.flush();
-            bw.close();
+			File file = new File("../JavaTest2/Exam2/temp/SampleChapter1.pdf");
 
-        }catch(ConnectException connExc){
-           
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-    }
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
+			bw.write(sb.toString());
+			bw.flush();
+			bw.close();
+
+		}catch(ConnectException connExc){
+
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
 }
